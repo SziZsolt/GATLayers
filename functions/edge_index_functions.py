@@ -48,8 +48,6 @@ class GraphAttentionLayer(MessagePassing):
     def message(self, h_i, h_j, edge_index_i):
         # pairing the source - target nodes
         h_cat = torch.cat([h_i, h_j], dim=-1)
-        # cloning them for num_heads
-        h_cat = h_cat.unsqueeze(0).repeat(self.num_heads, 1, 1)
         # applying attention
         h_attention = h_cat @ self.attention
         h_attention = h_attention.squeeze(-1)
